@@ -116,10 +116,20 @@ async function deleteGrade(grade) {
 }
 
 async function getValidationFromGradeType(gradeType) {
+  const gradeValidation = GRADE_VALIDATION.find(
+    (item) => item.gradeType === gradeType
+  );
+
+  const { minValue, maxValue } = gradeValidation;
+
+  return {
+    minValue,
+    maxValue,
+  }
   
 }
 
 
-export { getAllGrades };
+export { getAllGrades, insertGrade, updateGrade, deleteGrade, getValidationFromGradeType };
 
 
