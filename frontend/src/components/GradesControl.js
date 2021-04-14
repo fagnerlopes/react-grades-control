@@ -38,15 +38,22 @@ export default function GradesControl({ grades, onDelete, onPersist }) {
   });
 
   const handleActionClick = (id, type) => {
-    console.log(id);
-    console.log(type);
+    const grade = grades.find(grade => grade.id === id);
+    if(type === 'delete') {
+      onDelete(grade);
+      return;
+    } 
+    
+    onPersist(grade);
   }
 
   return (
-    <div className="container">
+    <div style={{ marginTop: "50px" }} className="container">
       {tableGrades.map(({id, grades}) => {
+        const finalGrade = grades.reduce((acc, curr) => acc + curr.value, 0);
+        const gradesStyle = finalGrade >= 70 ? styles.goodGrade : styles.badGrade;
         return (
-          <table className="striped" key={id}>
+          <table style={styles.table}className="striped" key={id}>
             <thead>
               <tr>
                 <th style={{width: '22.5%'}}>Aluno</th>
@@ -66,18 +73,51 @@ export default function GradesControl({ grades, onDelete, onPersist }) {
                       <td>{type}</td>
                       <td>{isDeleted ? '-' : value}</td>
                       <td>                        
-                        <Action onActionClick={handleActionClick} id={id} type={isDeleted ? 'add' : 'edit'}/>
-                        {!isDeleted && <Action onActionClick={handleActionClick} id={id} type="delete"/>}
+                        <Action 
+                          onActionClick={handleActionClick} 
+                          id={id} 
+                          type={isDeleted ? 'add' : 'edit'}
+                        />
+                        {
+                        !isDeleted && <Action 
+                                        onActionClick={handleActionClick} 
+                                        id={id} 
+                                        type="delete"
+                                      />
+                        }
                       </td>
                     </tr>
                   );
                 }
               )}
             </tbody>
-            <tfoot></tfoot>
+            <tfoot>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td style={{ textAlign: 'right' }}><strong>Total</strong></td>
+                <td><span style={ gradesStyle }>{finalGrade}</span></td>
+              </tr>
+            </tfoot>
           </table>
         );
       })}
     </div>
   );
+}
+
+const styles = {
+  goodGrade: {
+    fontWeight: 'bold',
+    color: 'green',
+  },
+  badGrade: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  table: {
+    margin: '20px',
+    padding: '10px',
+  }
 }

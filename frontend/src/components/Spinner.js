@@ -25,5 +25,6 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 'Calc(100vh / 2)'
   }
 }
