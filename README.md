@@ -1,7 +1,10 @@
 # Grades Control system
 A basic IGTI Bootcamp exercise built with ReacJs using Function Components and Hooks.
+### Main Page
+![](./view.png)
 
-![]('./view.png')
+### Modal Form
+![](./view_modal.png)
 
 ## Clone repository
 ```
